@@ -19,7 +19,9 @@ console.log(`Resultado 1: ${SOMA}`);
 // IMPORTANTE: Esse número pode ser informado através de qualquer entrada de sua preferência ou pode ser previamente definido no código;
 
 function calcFibonacci(num) {
-  let a = 0, b = 1, next = 0;
+  let a = 0,
+    b = 1,
+    next = 0;
 
   if (num === 0 || num === 1) {
     return true;
@@ -40,5 +42,66 @@ if (calcFibonacci(numero)) {
   console.log(`${numero} pertence à sequencia Fibonacci.`);
 } else {
   console.log(`${numero} não percente à sequência de Fibonacci.`);
-  
 }
+
+// 3) Dado um vetor que guarda o valor de faturamento diário de uma distribuidora, faça um programa, na linguagem que desejar, que calcule e retorne:
+// • O menor valor de faturamento ocorrido em um dia do mês;
+// • O maior valor de faturamento ocorrido em um dia do mês;
+// • Número de dias no mês em que o valor de faturamento diário foi superior à média mensal.
+
+// IMPORTANTE:
+// a) Usar o json ou xml disponível como fonte dos dados do faturamento mensal;
+// b) Podem existir dias sem faturamento, como nos finais de semana e feriados. Estes dias devem ser ignorados no cálculo da média;
+
+// Utilizando JSON:
+
+// [
+//   { dia: 1, faturamento: 1000 },
+//   { dia: 2, faturamento: 0 },
+//   { dia: 3, faturamento: 2000 },
+//   { dia: 4, faturamento: 1500 },
+//   { dia: 5, faturamento: 0 },
+//   { dia: 6, faturamento: 1800 },
+//   { dia: 7, faturamento: 2300 },
+//   { dia: 8, faturamento: 0 },
+// ];
+
+const faturamentoMensal = [
+  { dia: 1, faturamento: 3000 },
+  { dia: 2, faturamento: 500 },
+  { dia: 3, faturamento: 2000 },
+  { dia: 4, faturamento: 1500 },
+  { dia: 5, faturamento: 0 },
+  { dia: 6, faturamento: 1800 },
+  { dia: 7, faturamento: 2300 },
+  { dia: 8, faturamento: 0 },
+  { dia: 9, faturamento: 5000 },
+  { dia: 10, faturamento: 0 },
+];
+
+const diasComFaturamento = faturamentoMensal.filter(
+  (dia) => dia.faturamento > 0
+);
+
+const menorFaturamento = Math.min(
+  ...diasComFaturamento.map((dia) => dia.faturamento)
+);
+const maiorFaturamento = Math.max(
+  ...diasComFaturamento.map((dia) => dia.faturamento)
+);
+
+const totalFaturamento = diasComFaturamento.reduce(
+  (total, dia) => total + dia.faturamento,
+  0
+);
+const mediaMensal = totalFaturamento / diasComFaturamento.length;
+
+const diasAcimaDaMedia = diasComFaturamento.filter(
+  (dia) => dia.faturamento > mediaMensal
+).length;
+
+console.log(`Menor valor de faturamento: ${menorFaturamento}`);
+console.log(`Maior valor de faturamento: ${maiorFaturamento}`);
+console.log(
+  `Número de dias com faturamento acima da média: ${diasAcimaDaMedia}`
+);
